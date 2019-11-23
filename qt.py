@@ -4,7 +4,6 @@
 
 import sys
 import os
-from urllib.parse import quote
 import hmac
 import time
 import requests
