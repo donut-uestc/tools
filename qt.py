@@ -39,4 +39,4 @@ while True:
         h=hmac.new(key, digestmod='md5')
         h.update(child_url.encode('utf-8'))
         url= "https://audio.qingting.fm" + child_url + "&sign=%s"%h.hexdigest()
-        os.system("wget -O %s \"%s\""%(program_name, url))
+        os.system("wget -O %s.m4a \"%s\""%(program_name, url))
