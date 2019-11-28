@@ -173,12 +173,18 @@ post_data["rememberMe"] = False
 url = "https://passport.ximalaya.com/web/login/pwd/v1"
 
 r = session.post(url, cookies=cookies, verify=False, json=post_data).json()
+print(r)
 uid=r['uid']
 token=r['token']
 print(uid, token)
 cookies['1&_token'] = "%d&%s"%(uid,token)
 
 album_id = int(sys.argv[1])
+
+start_download = True
+
+if len(sys.argv) == 3:
+    start_download = False
 
 curpage = 1
 while True:
@@ -193,6 +199,14 @@ while True:
         title = track['title']
         track_id = track['trackId']
         print(title, track_id)
+
+        if not start_download:
+            if sys.argv[2] not in title:
+                continue
+            else:
+                start_download = True
+                
+
 
         #url = "https://www.ximalaya.com/revision/play/v1/audio?id=%d&ptype=1"%track_id
         #r = requests.get(url, cookies=cookies, headers=HEADERS, verify=False).json()
@@ -211,14 +225,20 @@ while True:
                 r['apiVersion'], 
                 check_path(r['seed'], r['fileId']), 
                 sign, r['buyKey'], token, timestamp, r['duration'])
+ 
+#        print(url)
+#        retry = 0
+#        while retry < 10:
+#            r = session.get(url, cookies=cookies, headers=HEADERS, verify=False)
+#            print(r.status_code)
+#            if r.status_code == 200:
+#                with open('%s.m4a'%title, 'wb') as f:
+#                    f.write(r.content)
+#                    print('%s success download'%title)
+#            else:
+#                print("%s retry download" % title)
+#                time.sleep(1)
+#                retry = retry + 1
         
-        
-        r = session.get(url, cookies=cookies, headers=HEADERS, verify=False)
-        with open('x.m4a', 'wb') as f:
-            f.write(r.content)
-        print(url)
-        break
-    break
-
-        #os.system("wget -O %s.m4a \"%s\""%(title, url))
+        os.system("wget --no-use-server-timestamps -O \"%s\".m4a \"%s\""%(title, url))
         #print("wget -O %s.m4a \"%s\""%(title, url))

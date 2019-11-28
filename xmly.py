@@ -25,4 +25,5 @@ while True:
         url = "https://www.ximalaya.com/revision/play/v1/audio?id=%d&ptype=1"%track_id
         r = requests.get(url, headers=HEADERS).json()
         url = r['data']['src']
-        os.system("wget -O %s.m4a \"%s\""%(title, url))
+        os.system("wget --no-use-server-timestamps -O \"%s\".m4a \"%s\""%(title, url))
+

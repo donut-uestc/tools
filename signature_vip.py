@@ -110,10 +110,10 @@ def B(t):
 
 def create(ep):
     bt = mt("xm", "Ä[ÜJ=Û3Áf÷N")
-    ep = "20NvOoh6T39X3qwKO4cY5g5bVhg+hnSTRdJJKlyxC3/9m+6N2fyPy+lbh66M1aVlVLFz2nMYeqRo2ez+xgIR0r0WOyxe"
     a = A("d" + bt + "9", wt)
     b = B(ep)
     c = mt(a, b).split('-')
+    print(c[3])
     return c[1], c[2], c[3]
 
 if __name__ == '__main__':
